@@ -14,6 +14,7 @@ const generateShuffledIndices = () => {
 	}
 	return indices;
 };
+
 const getBoxColor = (status: BoxStatus) => {
 	switch (status) {
 		case "success":
