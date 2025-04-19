@@ -1,10 +1,10 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import axios from "axios";
 
 import "./Concurrency.css";
 
 type BoxStatus = "default" | "success" | "fail";
-const API_BASE_URL = "http://localhost:8080/api/v1";
+// const API_BASE_URL = "http://scenario-backend:8080/api/v1";
 const BOX_COUNT = 100;
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
@@ -14,6 +14,7 @@ const generateShuffledIndices = () => {
 	}
 	return indices;
 };
+
 const getBoxColor = (status: BoxStatus) => {
 	switch (status) {
 		case "success":
@@ -43,9 +44,7 @@ const Concurrency = () => {
 			const userId = i + 1;
 
 			axios
-				.post(
-					`http://localhost:8080/api/v1/coupon/${id}?userId=${userId}`
-				)
+				.post(`/api/v1/coupon/${id}?userId=${userId}`)
 				.then((response) => {
 					const result = response.data.result;
 					if (result === "success") {
@@ -75,7 +74,7 @@ const Concurrency = () => {
 		setShuffledIndices(generateShuffledIndices());
 
 		try {
-			const response = await axios.post(`${API_BASE_URL}/coupons`);
+			const response = await axios.post(`/api/v1/coupons`);
 			setName(response.data.couponName);
 			setQuantity(response.data.quantity);
 			setId(response.data.id);
