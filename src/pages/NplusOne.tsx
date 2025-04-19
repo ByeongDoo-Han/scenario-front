@@ -12,4 +12,4 @@ const NplusOne = () => {
 	);
 };
 
-export default Concurrency;
+export default NplusOne;
