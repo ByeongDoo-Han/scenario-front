@@ -1,6 +1,3 @@
-import {useState} from "react";
-import axios from "axios";
-
 const NplusOne = () => {
 	return (
 		<div>
