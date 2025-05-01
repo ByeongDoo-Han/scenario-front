@@ -44,7 +44,9 @@ const Concurrency = () => {
 			const userId = i + 1;
 
 			axios
-				.post(`/api/v1/coupon/${id}?userId=${userId}`)
+				.post(
+					`http://localhost:8080/api/v1/coupon/${id}?userId=${userId}`
+				)
 				.then((response) => {
 					const result = response.data.result;
 					if (result === "success") {
@@ -74,7 +76,9 @@ const Concurrency = () => {
 		setShuffledIndices(generateShuffledIndices());
 
 		try {
-			const response = await axios.post(`/api/v1/coupons`);
+			const response = await axios.post(
+				`http://localhost:8080/api/v1/coupons`
+			);
 			setName(response.data.couponName);
 			setQuantity(response.data.quantity);
 			setId(response.data.id);
