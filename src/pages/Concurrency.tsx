@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Concurrency.css";
 
 type BoxStatus = "default" | "success" | "fail";
-// const API_BASE_URL = "http://scenario-backend:8080/api/v1";
+const API_BASE_URL = "scenario-backend";
 const BOX_COUNT = 100;
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
@@ -45,7 +45,7 @@ const Concurrency = () => {
 
 			axios
 				.post(
-					`http://localhost:8080/api/v1/coupon/${id}?userId=${userId}`
+					`http://${API_BASE_URL}:8080/api/v1/coupon/${id}?userId=${userId}`
 				)
 				.then((response) => {
 					const result = response.data.result;
@@ -77,7 +77,7 @@ const Concurrency = () => {
 
 		try {
 			const response = await axios.post(
-				`http://localhost:8080/api/v1/coupons`
+				`http://${API_BASE_URL}:8080/api/v1/coupons`
 			);
 			setName(response.data.couponName);
 			setQuantity(response.data.quantity);
