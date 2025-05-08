@@ -34,10 +34,21 @@ const Concurrency = () => {
 		generateShuffledIndices()
 	);
 
+	const [check, setCheck] = useState("");
 	const [id, setId] = useState(null);
 	const [name, setName] = useState("쿠폰 없음");
 	const [quantity, setQuantity] = useState(0);
 
+	const getCheck = async () => {
+		try {
+			const response = await axios.post(
+				`http://${API_BASE_URL}:8080/api/v1/check`
+			);
+			setCheck(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
 	const issueAllCoupons = async () => {
 		if (id === null) return;
 		const promises = Array.from({length: BOX_COUNT}, (_, i) => {
@@ -45,7 +56,7 @@ const Concurrency = () => {
 
 			axios
 				.post(
-					`https://${API_BASE_URL}:8080/api/v1/coupon/${id}?userId=${userId}`
+					`http://${API_BASE_URL}:8080/api/v1/coupon/${id}?userId=${userId}`
 				)
 				.then((response) => {
 					const result = response.data.result;
@@ -77,7 +88,7 @@ const Concurrency = () => {
 
 		try {
 			const response = await axios.post(
-				`https://${API_BASE_URL}:8080/api/v1/coupons`
+				`http://${API_BASE_URL}:8080/api/v1/coupons`
 			);
 			setName(response.data.couponName);
 			setQuantity(response.data.quantity);
@@ -91,6 +102,8 @@ const Concurrency = () => {
 		<div>
 			<h1>🧾 쿠폰 발급 시뮬레이터</h1>
 			<div>
+				<button onClick={getCheck}>서버 check</button>
+				<p>서버 : {check}</p>
 				<button onClick={createCoupon}>쿠폰 생성</button>
 				<p>쿠폰 아이디 : {id}</p>
 				<p>쿠폰 이름 : {name}</p>
