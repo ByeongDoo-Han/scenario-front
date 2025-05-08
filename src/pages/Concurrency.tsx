@@ -45,7 +45,7 @@ const Concurrency = () => {
 
 			axios
 				.post(
-					`http://${API_BASE_URL}:8080/api/v1/coupon/${id}?userId=${userId}`
+					`https://${API_BASE_URL}:8080/api/v1/coupon/${id}?userId=${userId}`
 				)
 				.then((response) => {
 					const result = response.data.result;
@@ -77,7 +77,7 @@ const Concurrency = () => {
 
 		try {
 			const response = await axios.post(
-				`http://${API_BASE_URL}:8080/api/v1/coupons`
+				`https://${API_BASE_URL}:8080/api/v1/coupons`
 			);
 			setName(response.data.couponName);
 			setQuantity(response.data.quantity);
