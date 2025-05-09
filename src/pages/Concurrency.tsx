@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Concurrency.css";
 
 type BoxStatus = "default" | "success" | "fail";
-const API_BASE_URL = "13.125.236.97";
+const API_BASE_URL = "";
 const BOX_COUNT = 100;
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
