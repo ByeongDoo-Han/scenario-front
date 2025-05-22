@@ -1,9 +1,51 @@
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+}
+
+.content-wrapper {
+	grid-column: 1 / 2;
+}
+
+.controls {
+	margin-bottom: 20px;
+	display: flex;
+	gap: 20px;
+	flex-wrap: wrap;
+}
+
+.controls button {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	padding: 8px 16px;
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.controls button:hover {
+	background-color: #45a049;
+}
+
+.controls button:disabled {
+	background-color: #cccccc;
+	cursor: not-allowed;
+}
+
 .grid {
 	display: grid;
 	grid-template-columns: repeat(10, 40px);
 	gap: 8px;
 	margin-top: 20px;
 }
+
 .box {
 	width: 40px;
 	height: 40px;
@@ -11,12 +53,45 @@
 	background-color: #333; /* 기본 */
 	transition: background-color 0.3s ease;
 }
+
 .box.success {
 	background-color: #4caf50; /* 초록색 */
 }
+
 .box.fail {
 	background-color: #f44336; /* 빨간색 */
 }
+
+.table-wrapper {
+	grid-column: 2 / 3;
+}
+
+.info-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 20px;
+}
+
+.info-table th,
+.info-table td {
+	padding: 12px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.info-table th {
+	background-color: #333;
+	color: white;
+}
+
+.info-table tr:hover {
+	background-color: #f5f5f5;
+}
+
+.info-table td:first-child {
+	font-weight: bold;
+}
+
 select {
 	margin-left: 5px;
 	margin-right: 5px;
