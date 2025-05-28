@@ -13,7 +13,7 @@ interface Lecture {
 
 type BoxStatus = "default" | "success" | "fail";
 const BOX_COUNT = 100;
-const DEV_URL = "";
+const DEV_URL = "http://localhost:8080";
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
 	for (let i = indices.length - 1; i > 0; i--) {
@@ -41,19 +41,7 @@ const Concurrency = () => {
 	const [shuffledIndices, setShuffledIndices] = useState<number[]>(
 		generateShuffledIndices()
 	);
-	// const [quantityList, setQuantityList] = useState<number[]>([0,0,0,0,0]);
-	// const [successList, setSuccessList] = useState<number[]>([0,0,0,0,0]);
 	const [boxes, setBoxes] = useState<BoxStatus[]>(Array(BOX_COUNT).fill("default"));
-	// const [lectureList, setLectureList] = useState<Lecture[] | null>(null);
-	
-	// const list = async () => {
-	// 	const response = await axios.get(`${DEV_URL}/api/v1/courses`)
-	// 	setLectureList(response.data);
-	// }
-
-	// useEffect(() => {
-	// 	list();
-	// }, []);	
 
 	const applyLecture = async () => {
 		const promises = Array.from({length: BOX_COUNT}, (_, i) => {
