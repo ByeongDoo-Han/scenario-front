@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import "./Search.css";
 import axios from "axios";
+import About from "./About";
 
 const DEV_URL = "http://localhost:8080";
 
@@ -93,7 +94,9 @@ const Search = () => {
 	}, []);
 
 	return (
+		
 		<div className="search-container">
+			<About/>
 			<h1 className="search-title">ElasticSearch 검색</h1>
 			<div className="search-wrapper">
 			<div className="search-input-container">
