@@ -2,6 +2,7 @@ import {useState} from "react";
 import axios from "axios";
 
 import "./Concurrency.css";
+import About from "./About";
 
 interface Lecture {
   id: number;
@@ -124,8 +125,13 @@ const Concurrency = () => {
 
 	return (
 		<div className="container">
-			<h1>동시성 제어 시각화</h1>
+			<div>
+			<About/>
+
+			</div>
 			<div className="content-wrapper">
+			<h1>동시성 제어 시각화</h1>
+
 				<div className="controls">
 					<div>
 						<button onClick={createLecture}>강의 생성</button>
