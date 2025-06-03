@@ -9,7 +9,7 @@ const About = () => {
     // <Button variant="secondary">Middle</Button>
     // <Button variant="secondary">Right</Button>
     // </ButtonGroup>
-    <div>
+    <div >
       <Nav>
         <Nav.Item>
           <Nav.Link href="/"><b>Scenario</b></Nav.Link>

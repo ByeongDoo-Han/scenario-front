@@ -137,6 +137,7 @@ const Concurrency = () => {
 						<button onClick={createLecture}>강의 생성</button>
 						<button onClick={applyLecture}>정상 수강 신청</button>
 						<button onClick={applyLectureNotSync}>동시성 충돌 수강 신청</button>
+						<select></select>
 					</div>
 				</div>
 				<div className="table-wrapper">
