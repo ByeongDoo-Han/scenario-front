@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Button, ButtonGroup, NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const About = () => {

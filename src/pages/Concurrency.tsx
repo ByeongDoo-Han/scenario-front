@@ -3,6 +3,7 @@ import axios from "axios";
 
 import "./Concurrency.css";
 import About from "./About";
+import Title from "./Title";
 
 interface Lecture {
   id: number;
@@ -125,19 +126,15 @@ const Concurrency = () => {
 
 	return (
 		<div className="container">
-			<div>
 			<About/>
-
-			</div>
 			<div className="content-wrapper">
-			<h1>동시성 제어 시각화</h1>
+				<Title title="동시성 제어 시각화" color="antiquewhite" padding="1rem"/>
 
 				<div className="controls">
 					<div>
 						<button onClick={createLecture}>강의 생성</button>
 						<button onClick={applyLecture}>정상 수강 신청</button>
 						<button onClick={applyLectureNotSync}>동시성 충돌 수강 신청</button>
-						<select></select>
 					</div>
 				</div>
 				<div className="table-wrapper">

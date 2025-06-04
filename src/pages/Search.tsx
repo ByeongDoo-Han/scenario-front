@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import "./Search.css";
 import axios from "axios";
 import About from "./About";
+import Title from "./Title";
 
 const DEV_URL = "http://localhost:8080";
 
@@ -97,7 +98,7 @@ const Search = () => {
 		
 		<div className="search-container">
 			<About/>
-			<h1 className="search-title">ElasticSearch 검색</h1>
+			<Title title="ElasticSearch 검색" color="antiquewhite" padding="1rem"/>
 			<div className="search-wrapper">
 			<div className="search-input-container">
 					<input 

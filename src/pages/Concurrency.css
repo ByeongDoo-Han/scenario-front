@@ -12,6 +12,12 @@
 	grid-column: 1 / 2;
 }
 
+.title{
+	padding: 1rem;
+	text-align: left;
+	color:antiquewhite
+}
+
 .controls {
 	margin-bottom: 20px;
 	display: flex;
