@@ -15,7 +15,7 @@ interface Lecture {
 
 type BoxStatus = "default" | "success" | "fail";
 const BOX_COUNT = 100;
-const DEV_URL = "http://localhost:8080";
+const DEV_URL = "";
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
 	for (let i = indices.length - 1; i > 0; i--) {
