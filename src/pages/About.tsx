@@ -23,6 +23,9 @@ const About = () => {
         <Nav.Item>
           {/* <Nav.Link href="/nplus">N+1</Nav.Link> */}
         </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/human">Human</Nav.Link>
+        </Nav.Item>
       </Nav>
     </div>
 	

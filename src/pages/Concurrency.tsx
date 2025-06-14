@@ -15,7 +15,7 @@ interface Lecture {
 
 type BoxStatus = "default" | "success" | "fail";
 const BOX_COUNT = 100;
-const DEV_URL = "";
+const DEV_URL = "http://localhost:8080";
 const generateShuffledIndices = () => {
 	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
 	for (let i = indices.length - 1; i > 0; i--) {
@@ -146,7 +146,7 @@ const Concurrency = () => {
 								<th>수강명</th>
 								<th>담당교수</th>
 								<th>정원</th>
-								<th>신청 성공 인원</th>
+								<th>신청 성공</th>
 							</tr>
 						</thead>
 						<tbody>

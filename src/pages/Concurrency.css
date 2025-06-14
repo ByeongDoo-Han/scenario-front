@@ -10,6 +10,7 @@
 
 .content-wrapper {
 	grid-column: 1 / 2;
+	width: 500px;
 }
 
 .title{
@@ -79,11 +80,11 @@
 	margin-top: 20px;
 }
 
-.info-table th,
 .info-table td {
 	padding: 12px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
+	color: white;
 }
 
 .info-table th {
@@ -92,7 +93,7 @@
 }
 
 .info-table tr:hover {
-	background-color: #f5f5f5;
+	background-color: #242424;
 }
 
 .info-table td:first-child {
