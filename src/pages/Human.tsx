@@ -110,37 +110,6 @@ const Human = () => {
 		}
 	}
 
-	const save = async () => {
-		if (!saveKeyword.trim()) return;
-		try {
-			const res = await axios.post(`${DEV_URL}/api/v1/elastic/human`, { name: saveKeyword });
-			console.log(res);
-			setResults(res.data); 
-			setSaveKeyword(""); 
-			refresh();
-		} catch (error) {
-			console.error("Save keyword error:", error);
-		}
-	};
-
-	const deleteTitle = useCallback(async (id: string, name: string) => {
-
-		try {
-			setIsLoading(true);
-			await axios.delete(`${DEV_URL}/api/v1/elastic/human/${id}`);
-			setTitles(prevTitles => prevTitles.filter(t => t.id !== id));
-			if (keyword === id) {
-				setKeyword("");
-			}
-			console.log(name + " 삭제");
-		} catch (error) {
-			console.error("Delete title error:", error);
-			setError('삭제 중 오류가 발생했습니다');
-		} finally {
-			setIsLoading(false);
-		}
-	}, [keyword]);
-
 	const handleResultClick = useCallback((name: string) => {
 		setKeyword(name);
 		setShowDropdown(false);
