@@ -5,21 +5,20 @@ import "./Concurrency.css";
 import About from "./About";
 import Title from "./Title";
 
-interface Lecture {
+interface Coupon {
   id: number;
-  code: string;
-  name: string;
-  professor: string;
+  couponName: string;
   quantity: number;
 }
 
 type BoxStatus = "default" | "success" | "fail";
-const BOX_COUNT = 100;
-const DEV_URL = "http://localhost:8080";
+const BOX_COUNT_8080 = 500;
+const BOX_COUNT_8081 = 500;
 const DEV_URL_8080 = "http://localhost:8080";
 const DEV_URL_8081 = "http://localhost:8081";
+
 const generateShuffledIndices = () => {
-	const indices = Array.from({length: BOX_COUNT}, (_, i) => i);
+	const indices = Array.from({length: BOX_COUNT_8080+BOX_COUNT_8081}, (_, i) => i);
 	for (let i = indices.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[indices[i], indices[j]] = [indices[j], indices[i]];
@@ -38,91 +37,66 @@ const getBoxColor = (status: BoxStatus) => {
 	}
 };
 
-const Concurrency = () => {
+const Concurrency2 = () => {
 	const [id, setId] = useState<number | null>(null);
-	const [lecture, setLecture] = useState<Lecture | null>(null);
+	const [coupon, setCoupon] = useState<Coupon | null>(null);
 	const [success, setSuccess] = useState(0);
 	const [shuffledIndices, setShuffledIndices] = useState<number[]>(
 		generateShuffledIndices()
 	);
-	const [boxes, setBoxes] = useState<BoxStatus[]>(Array(BOX_COUNT).fill("default"));
+	const [boxes, setBoxes] = useState<BoxStatus[]>(Array(BOX_COUNT_8080+BOX_COUNT_8081).fill("default"));
 
-	const applyLecture2 = async () => {
-		const promises = Array.from({length: BOX_COUNT}, (_, i) => {
+	const applyCoupon = async () => {
+		const promises = [];
+
+		for (let i = 0; i < BOX_COUNT_8080 + BOX_COUNT_8081; i++) {
 			const studentId = i + 1;
+			const targetUrl = studentId < 501
+			? `${DEV_URL_8080}/api/v1/coupon/${id}?userId=${studentId}`
+			: `${DEV_URL_8081}/api/v1/coupon/${id}?userId=${studentId}`;
 
-			axios
-				.post(
-					`${DEV_URL}/api/v1/course/${id}?userId=${studentId}`
-				)
-				.then((response) => {
-					const result = response.data.result;
-					if (result === "success") {
-						updateBox(i, "success");
-						setSuccess((prev) => prev + 1);
-					} else {
-						updateBox(i, "fail");
-					}
-				})
-				.catch((error) => {
-					console.error(`Student ${i + 1} 실패 : `, error.message);
-				});
+			// 요청을 만들고 배열에 추가만
+			promises.push(axios.post(targetUrl)
+			.then((response) => {
+				const result = response.data.result;
+				if (result === "success") {
+					updateBox(i, "success");
+					setSuccess((prev) => prev + 1);
+				} else {
+					updateBox(i, "fail");
+				}
+			})
+			.catch((err) => {
+				updateBox(i, "fail");
+				console.error(`Student ${studentId} 실패`, err.message);
+			}));
+		}
+		await Promise.all(promises);
+	};
+
+	const applyCouponNotSync = async () => {
+		const promises = Array.from({length: BOX_COUNT_8080+BOX_COUNT_8081}, (_, i) => {
+			const studentId = i + 1;
+			const targetUrl = studentId < 51
+			? `${DEV_URL_8080}/api/v1/coupon/notsync/${id}?userId=${studentId}`
+			: `${DEV_URL_8081}/api/v1/coupon/notsync/${id}?userId=${studentId}`;
+			
+			// ❗ 반드시 return
+			return axios.post(targetUrl)
+			.then((response) => {
+			  const result = response.data.result;
+			  if (result === "success") {
+				updateBox(i, "success");
+				setSuccess((prev) => prev + 1);
+			  } else {
+				updateBox(i, "fail");
+			  }
+			})
+			.catch((error) => {
+			  console.error(`Student ${i +1} 실패 : `, error.message);
+			  updateBox(i, "fail");
+			});
 		});
-		await Promise.all(promises);
-	};
-	const applyLecture = async () => {
-		const promises = [];
-
-		for (let i = 0; i < BOX_COUNT; i++) {
-			const studentId = i + 1;
-			const targetUrl = studentId%2 === 0
-			? `${DEV_URL_8080}/api/v1/course/${id}?userId=${studentId}`
-			: `${DEV_URL_8081}/api/v1/course/${id}?userId=${studentId}`;
-
-			// 요청을 만들고 배열에 추가만
-			promises.push(axios.post(targetUrl)
-			.then((response) => {
-				const result = response.data.result;
-				if (result === "success") {
-					updateBox(i, "success");
-					setSuccess((prev) => prev + 1);
-				} else {
-					updateBox(i, "fail");
-				}
-			})
-			.catch((err) => {
-				updateBox(i, "fail");
-				console.error(`Student ${studentId} 실패`, err.message);
-			}));
-		}
-		await Promise.all(promises);
-	};
-
-	const applyLectureNotSync = async () => {
-		const promises = [];
-
-		for (let i = 0; i < BOX_COUNT; i++) {
-			const studentId = i + 1;
-			const targetUrl = studentId%2 === 0
-			? `${DEV_URL_8080}/api/v1/course/notsync/${id}?userId=${studentId}`
-			: `${DEV_URL_8081}/api/v1/course/notsync/${id}?userId=${studentId}`;
-
-			// 요청을 만들고 배열에 추가만
-			promises.push(axios.post(targetUrl)
-			.then((response) => {
-				const result = response.data.result;
-				if (result === "success") {
-					updateBox(i, "success");
-					setSuccess((prev) => prev + 1);
-				} else {
-					updateBox(i, "fail");
-				}
-			})
-			.catch((err) => {
-				updateBox(i, "fail");
-				console.error(`Student ${studentId} 실패`, err.message);
-			}));
-		}
 		await Promise.all(promises);
 	};
 
@@ -138,16 +112,17 @@ const Concurrency = () => {
 	// 	  });
 	// };
 
-	const createLecture = async () => {
+	const createCoupon = async () => {
 		
 		setSuccess(0);
-		setBoxes(Array(BOX_COUNT).fill("default"));
+		setBoxes(Array(BOX_COUNT_8080+BOX_COUNT_8081).fill("default"));
 		setShuffledIndices(generateShuffledIndices());
 		try{
-			const response = await axios.post(`${DEV_URL}/api/v1/courses`)
+			const response = await axios.post(`${DEV_URL_8080}/api/v1/coupon`)
 			
-			setLecture(response.data);
+			setCoupon(response.data);
 			setId(response.data.id);
+			console.log(response.data);
 			// const r = await axios.get(`${DEV_URL}/api/v1/course/${id}`)
 			// updateQuantityList(r.data.quantity);
 			// setLecture(r.data);
@@ -165,9 +140,9 @@ const Concurrency = () => {
 
 				<div className="controls">
 					<div>
-						<button onClick={createLecture}>강의 생성</button>
-						<button onClick={applyLecture}>정상 수강 신청</button>
-						<button onClick={applyLectureNotSync}>동시성 충돌 수강 신청</button>
+						<button onClick={createCoupon}>쿠폰 생성</button>
+						<button onClick={applyCoupon}>정상 수강 신청</button>
+						<button onClick={applyCouponNotSync}>동시성 충돌 수강 신청</button>
 					</div>
 				</div>
 				<div className="table-wrapper">
@@ -175,20 +150,16 @@ const Concurrency = () => {
 						<thead>
 							<tr>
 								<th>번호</th>
-								<th>강의코드</th>
-								<th>수강명</th>
-								<th>담당교수</th>
-								<th>정원</th>
-								<th>신청 성공</th>
+								<th>쿠폰이름</th>
+								<th>수량</th>
+								<th>발급 인원</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>{lecture?.id || "-"}</td>
-								<td>{lecture?.code || "-"}</td>
-								<td>{lecture?.name || "-"}</td>
-								<td>{lecture?.professor || "-"}</td>
-								<td>{lecture?.quantity || "-"}</td>
+								<td>{coupon?.id || "-"}</td>
+								<td>{coupon?.couponName || "-"}</td>
+								<td>{coupon?.quantity || "-"}</td>
 								<td>{success || "-"}</td>
 							</tr>
 							{/* <tr>
@@ -239,4 +210,4 @@ const Concurrency = () => {
 	);
 };
 
-export default Concurrency;
+export default Concurrency2;
