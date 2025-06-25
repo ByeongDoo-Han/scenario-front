@@ -15,7 +15,10 @@ const About = () => {
           <Nav.Link href="/"><b>Scenario</b></Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link href="/concurrency">동시성 제어</Nav.Link>
+          <Nav.Link href="/concurrency">동시성 제어(1개서버)</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link href="/concurrency2">동시성 제어(2개서버)</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link href="/search">ElasticSearch</Nav.Link>
